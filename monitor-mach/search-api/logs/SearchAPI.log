@@ -1,0 +1,16 @@
+2026-05-28 02:08:35 [SearchAPI] [SearchAPI] [search_pokemon] [INFO] [START] search_pokemon | input='pikachu'
+2026-05-28 02:08:35 [SearchAPI] [SearchAPI] [search_pokemon] [INFO] [REQUEST] PokeAPI | url='https://pokeapi.co/api/v2/pokemon/pikachu/'
+2026-05-28 02:08:39 [SearchAPI] [SearchAPI] [search_pokemon] [INFO] [RESPONSE] PokeAPI | status=200 | latency=4348.23ms
+2026-05-28 02:08:39 [SearchAPI] [SearchAPI] [search_pokemon] [INFO] [END] search_pokemon | pokemon='pikachu' | total_latency=4945.78ms
+2026-05-28 02:12:02 [SearchAPI] [SearchAPI] [search_pokemon] [INFO] [START] search_pokemon | input='pikachu'
+2026-05-28 02:12:03 [SearchAPI] [SearchAPI] [search_pokemon] [INFO] [REQUEST] PokeAPI | url='https://pokeapi.co/api/v2/pokemon/pikachu/'
+2026-05-28 02:12:07 [SearchAPI] [SearchAPI] [search_pokemon] [INFO] [RESPONSE] PokeAPI | status=200 | latency=3647.43ms
+2026-05-28 02:12:07 [SearchAPI] [SearchAPI] [search_pokemon] [INFO] [END] search_pokemon | pokemon='pikachu' | total_latency=4415.74ms
+2026-05-28 02:12:26 [SearchAPI] [SearchAPI] [search_pokemon] [INFO] [START] search_pokemon | input='pikachu'
+2026-05-28 02:12:27 [SearchAPI] [SearchAPI] [search_pokemon] [INFO] [REQUEST] PokeAPI | url='https://pokeapi.co/api/v2/pokemon/pikachu/'
+2026-05-28 02:12:27 [SearchAPI] [SearchAPI] [search_pokemon] [INFO] [RESPONSE] PokeAPI | status=200 | latency=457.98ms
+2026-05-28 02:12:27 [SearchAPI] [SearchAPI] [search_pokemon] [INFO] [END] search_pokemon | pokemon='pikachu' | total_latency=1033.9ms
+2026-05-28 02:23:18 [SearchAPI] [SearchAPI] [search_pokemon] [INFO] [START] search_pokemon | input='pikachu'
+2026-05-28 02:23:18 [SearchAPI] [SearchAPI] [search_pokemon] [INFO] [REQUEST] PokeAPI | url='https://pokeapi.co/api/v2/pokemon/pikachu/'
+2026-05-28 02:23:19 [SearchAPI] [SearchAPI] [search_pokemon] [INFO] [RESPONSE] PokeAPI | status=200 | latency=628.74ms
+2026-05-28 02:23:19 [SearchAPI] [SearchAPI] [search_pokemon] [INFO] [END] search_pokemon | name='pikachu' | total_latency=1251.07ms
