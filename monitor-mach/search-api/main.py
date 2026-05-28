@@ -10,8 +10,6 @@ logger = get_logger("SearchAPI")
 POKE_API_BASE = "https://pokeapi.co/api/v2/pokemon"
 
 
-# ---------- Schemas ----------
-
 class SearchRequest(BaseModel):
     Pokemon_Name: str
 
@@ -19,7 +17,6 @@ class SearchResponse(BaseModel):
     name: str
 
 
-# ---------- Endpoint ----------
 
 @app.post("/poke/search", response_model=SearchResponse)
 async def search_pokemon(request: SearchRequest):
