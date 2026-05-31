@@ -1,0 +1,2 @@
+Method,Name,Error,Occurrences,First Seen,Last Seen
+POST,POST /poke/search,HTTPError('502 Server Error: Bad Gateway for url: POST /poke/search'),8,2026-05-31T03:53:09Z,2026-05-31T03:58:34Z

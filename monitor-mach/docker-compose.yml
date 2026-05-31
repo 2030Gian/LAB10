@@ -56,3 +56,21 @@ services:
       PUBLIC_BASE_URL: http://localhost:8002
       LOG_FILE: logs/poke-images-service.log
       LOG_LEVEL: INFO
+  locust:
+    image: locustio/locust:latest
+    container_name: locust
+    volumes:
+      - ./load-test:/mnt/locust
+    working_dir: /mnt/locust
+    environment:
+      TARGET_REQUESTS: 5000
+    depends_on:
+      - search-api
+    command: >
+      -f locustfile.py
+      --host http://search-api:8000
+      --headless
+      -u 50
+      -r 10
+      --run-time 10m
+      --csv results/search-api-load-test
