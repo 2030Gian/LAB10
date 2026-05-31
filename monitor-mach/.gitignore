@@ -1,0 +1,64 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+ENV/
+
+# Conda
+.conda/
+
+# Variables de entorno
+.env
+.env.*
+
+# Logs
+logs/
+*.log
+
+# Pytest / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Mac
+.DS_Store
+
+# SQLite / bases generadas
+*.db
+*.sqlite
+*.sqlite3
+
+# Docker / temporales
+docker-compose.override.yml
+
+# Archivos comprimidos pesados
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+
+# Datasets crudos
+poke-images-service/data/raw_images/
+poke-images-service/data/images_manifest.csv
+
+# Imágenes del dataset
+poke-images-service/data/images/*
+!poke-images-service/data/images/.gitkeep
+
+# Logs por microservicio
+poke-stats-service/logs/
+poke-images-service/logs/
+search-api/logs/
+
+# Base de datos generada del stats service
+poke-stats-service/data/*.db
+
+# Opcional: si el CSV pesa poco, NO lo ignores.
+# Si pesa mucho, descomenta esta línea:
+# poke-stats-service/data/pokemon_stats.csv

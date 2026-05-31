@@ -6,10 +6,20 @@ services:
     container_name: search-api
     ports:
       - "8000:8000"
+    volumes:
+      - ./search-api/logs:/app/logs
     environment:
+      SERVICE_NAME: SearchAPI
+      SERVICE_PORT: 8000
+      POKE_API_BASE_URL: https://pokeapi.co/api/v2
       POKE_STATS_BASE_URL: http://poke-stats-service:8001
+      POKE_IMAGES_BASE_URL: http://poke-images-service:8002
+      HTTP_TIMEOUT_SECONDS: 10
+      LOG_FILE: logs/search-api.log
+      LOG_LEVEL: INFO
     depends_on:
       - poke-stats-service
+      - poke-images-service
 
   poke-stats-service:
     build:
@@ -27,4 +37,22 @@ services:
       DATABASE_PATH: data/poke_stats.db
       CSV_PATH: data/pokemon_stats.csv
       LOG_FILE: logs/poke-stats-service.log
+      LOG_LEVEL: INFO
+
+  poke-images-service:
+    build:
+      context: ./poke-images-service
+      dockerfile: Dockerfile
+    container_name: poke-images-service
+    ports:
+      - "8002:8002"
+    volumes:
+      - ./poke-images-service/logs:/app/logs
+      - ./poke-images-service/data/images:/app/data/images
+    environment:
+      SERVICE_NAME: PokeImages
+      SERVICE_PORT: 8002
+      IMAGES_DIR: data/images
+      PUBLIC_BASE_URL: http://localhost:8002
+      LOG_FILE: logs/poke-images-service.log
       LOG_LEVEL: INFO

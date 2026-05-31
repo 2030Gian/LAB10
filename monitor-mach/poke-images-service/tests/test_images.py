@@ -1,7 +1,5 @@
 from fastapi.testclient import TestClient
-
 from app.main import app
-
 
 client = TestClient(app)
 
@@ -14,8 +12,7 @@ def test_health_check():
     assert response.json()["status"] == "UP"
 
 
-def test_root_is_running():
-    response = client.get("/")
+def test_pokemon_image_not_found():
+    response = client.get("/images/not-a-real-pokemon")
 
-    assert response.status_code == 200
-    assert response.json()["service"] == "PokeImages"
+    assert response.status_code == 404

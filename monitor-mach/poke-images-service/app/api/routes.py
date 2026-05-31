@@ -1,12 +1,16 @@
-import logging
 import time
+import logging
+from urllib.parse import quote
 
 from fastapi import APIRouter, HTTPException
 
+from app.core.config import settings
 from app.core.logger import log_event
-from app.models.schemas import ImageResponse
-from app.services.image_repository import find_image_by_name
-
+from app.models.schemas import PokemonImageResponse
+from app.services.image_repository import (
+    find_image_by_pokemon_name,
+    get_relative_image_path,
+)
 
 router = APIRouter()
 
@@ -15,13 +19,13 @@ router = APIRouter()
 def health_check():
     return {
         "service": "PokeImages",
-        "status": "UP",
+        "status": "UP"
     }
 
 
 @router.get(
     "/images/{pokemon_name}",
-    response_model=ImageResponse,
+    response_model=PokemonImageResponse,
     responses={
         404: {"description": "Pokemon image not found"},
         500: {"description": "Internal server error"},
@@ -39,36 +43,45 @@ def get_pokemon_image(pokemon_name: str):
     )
 
     try:
-        image = find_image_by_name(pokemon_name)
-
+        image_path = find_image_by_pokemon_name(pokemon_name)
         latency_ms = round((time.perf_counter() - start_time) * 1000, 2)
 
-        if image is None:
+        if image_path is None:
             log_event(
                 api=api,
                 function=function,
                 message=(
                     f"END pokemon={pokemon_name} status=404 "
-                    f"latency_ms={latency_ms} message=PokemonImageNotFound"
+                    f"latency_ms={latency_ms} message=ImageNotFound"
                 ),
                 level=logging.WARNING,
             )
 
             raise HTTPException(
                 status_code=404,
-                detail=f"Pokemon image '{pokemon_name}' not found",
+                detail=f"Image for Pokemon '{pokemon_name}' not found"
             )
+
+        relative_path = get_relative_image_path(image_path)
+        encoded_relative_path = quote(relative_path)
+
+        public_base_url = settings.PUBLIC_BASE_URL.rstrip("/")
+        image_url = f"{public_base_url}/static/images/{encoded_relative_path}"
 
         log_event(
             api=api,
             function=function,
             message=(
                 f"END pokemon={pokemon_name} status=200 "
-                f"latency_ms={latency_ms}"
+                f"latency_ms={latency_ms} image_path={relative_path}"
             ),
         )
 
-        return image
+        return {
+            "name": pokemon_name,
+            "image_url": image_url,
+            "relative_path": f"/static/images/{encoded_relative_path}",
+        }
 
     except HTTPException:
         raise
@@ -86,4 +99,7 @@ def get_pokemon_image(pokemon_name: str):
             level=logging.ERROR,
         )
 
-        raise HTTPException(status_code=500, detail="Internal server error")
+        raise HTTPException(
+            status_code=500,
+            detail="Internal server error"
+        )

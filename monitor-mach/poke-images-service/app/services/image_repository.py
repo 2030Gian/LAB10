@@ -1,22 +1,41 @@
 from pathlib import Path
-
+from typing import Optional
 from app.core.config import settings
-from app.models.schemas import ImageResponse
 from app.utils.normalize import normalize_name
 
 
-def find_image_by_name(pokemon_name: str) -> ImageResponse | None:
-    normalized_name = normalize_name(pokemon_name)
-    images_dir = Path(settings.IMAGES_DIR)
+ALLOWED_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".gif"}
 
-    for extension in ("png", "jpg", "jpeg", "webp", "gif"):
-        candidate = images_dir / f"{normalized_name}.{extension}"
 
-        if candidate.exists():
-            return ImageResponse(
-                name=normalized_name,
-                image_url=str(candidate),
-                source="local",
-            )
+def get_images_root() -> Path:
+    root = Path(settings.IMAGES_DIR)
+    root.mkdir(parents=True, exist_ok=True)
+    return root
+
+
+def find_image_by_pokemon_name(pokemon_name: str) -> Optional[Path]:
+    images_root = get_images_root()
+    target_name = normalize_name(pokemon_name)
+
+    if not target_name:
+        return None
+
+    for file_path in images_root.rglob("*"):
+        if not file_path.is_file():
+            continue
+
+        if file_path.suffix.lower() not in ALLOWED_EXTENSIONS:
+            continue
+
+        file_stem = normalize_name(file_path.stem)
+        parent_name = normalize_name(file_path.parent.name)
+
+        if file_stem == target_name or parent_name == target_name:
+            return file_path
 
     return None
+
+
+def get_relative_image_path(image_path: Path) -> str:
+    images_root = get_images_root()
+    return image_path.relative_to(images_root).as_posix()

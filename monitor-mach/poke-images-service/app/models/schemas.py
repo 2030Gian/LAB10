@@ -1,12 +1,10 @@
-from typing import Optional
-
 from pydantic import BaseModel
 
 
-class ImageResponse(BaseModel):
+class PokemonImageResponse(BaseModel):
     name: str
-    image_url: Optional[str] = None
-    source: Optional[str] = None
+    image_url: str
+    relative_path: str
 
 
 class ErrorResponse(BaseModel):
