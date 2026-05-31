@@ -707,28 +707,6 @@ python main.py RenderGraph --metric Latency --module PokeStats --last-days 5
 
 python main.py Stats PokeStats --last-days 5
 ```
-
----
-
-# Capturas sugeridas para entrega
-
-Se recomienda adjuntar capturas de:
-
-```txt
-1. Docker Compose levantando los servicios.
-2. Health checks de SearchAPI, PokeStats y PokeImages.
-3. POST /poke/search funcionando.
-4. GET /stats/charizard funcionando.
-5. GET /images/charizard funcionando.
-6. Locust o JMeter ejecutando 5000 requests.
-7. Conteo de logs con wc -l.
-8. Ejemplo de logs con tail.
-9. CheckLatency.
-10. CheckAvailability.
-11. RenderGraph.
-12. Stats.
-```
-
 ---
 
 
